@@ -11,11 +11,13 @@
 Autofresh is a simple live-reload development server that rebuilds your program
 every time a file is saved, added, or deleted. Gone are the days where you need
 to manually recompile a program to test it. Install Autofresh, run it in your
-project directory, and start coding away.
+project directory, and start coding away. Once you save your file, your program
+will automatically recompile, as seen above.
 
 ### Installation
 
-You can checkout the releases page and download the latest version of autofresh.
+You can checkout the [releases](https://github.com/TerrenceHo/autofresh/releases) 
+page and download the latest version of autofresh.
 Install the binary compiled for your operating system and architecture. The same 
 binaries are also available under the directory `bin`.
 
@@ -56,7 +58,11 @@ The easiest way to configure Autofresh is to use a autofresh-config file. A
 sample autofresh-config file is shown below.
 
 ```json 
-autofresh-config.json here 
+{
+    "watchman": "/usr/local/bin/watchman",
+    "build": "go build -o sample .",
+    "run": "./sample"
+}
 ```
 
 Additionally, Autofresh takes in flags and environment variables, with the same
