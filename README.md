@@ -82,4 +82,5 @@ command and a run command.
 ### Contributing
 You should fork this repository, and then clone your fork into your GOPATH. The 
 Makefile is included for development convenience. Once you have your appropriate
-changes, make a pull request!
+changes, make a pull request! Most changes will be merged into the develop
+branch first, and will keep master branch stable.
