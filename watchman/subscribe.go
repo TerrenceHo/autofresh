@@ -6,7 +6,7 @@ import (
 	"net"
 )
 
-// Subscribes to watchman's messages about a directory's filesystem changes,
+// Subscribe to watchman's messages about a directory's filesystem changes,
 // using an appropriate Unix Socket to watchman. Can take in the directory and
 // a subscription name to configure the subscription.
 func Subscribe(conn net.Conn, directory, subname string, suffixes []string) {
@@ -23,8 +23,9 @@ func Subscribe(conn net.Conn, directory, subname string, suffixes []string) {
 	}
 }
 
-// Watches a project directory and all it's subdirectories. Currectly, this
-// function is deprecated in favor of Subscribe, until further notice.
+// WatchProject watches a project directory and all it's subdirectories.
+// Currectly, this function is deprecated in favor of Subscribe, until
+// further notice.
 func WatchProject(conn net.Conn, directory string) {
 	var cmd string
 

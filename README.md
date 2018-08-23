@@ -1,5 +1,8 @@
 # Autofresh
 
+[![Godoc](https://godoc.org/github.com/TerrenceHo/autofresh?status.svg)](http://godoc.org/github.com/TerrenceHo/autofresh)
+[![GoReportCard](https://goreportcard.com/badge/github.com/TerrenceHo/autofresh)](https://goreportcard.com/report/github.com/TerrenceHo/autofresh)
+
         ___         __        ______               __
        /   | __  __/ /_____  / ____/_______  _____/ /_
       / /| |/ / / / __/ __ \/ /_  / ___/ _ \/ ___/ __ \

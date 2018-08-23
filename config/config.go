@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/viper"
 )
 
+// Config of autofresh
 type Config struct {
 	Version    bool
 	Hidebanner bool
@@ -18,10 +19,13 @@ type Config struct {
 	Suffixes   []string
 }
 
+// LoadConfig takes in a cobra Command and unmarshalls it into the custom config
+// struct. It also binds pflags to viper, sets environment variables, and reads
+// in a autofresh-config.{json,yaml,toml}.
 func LoadConfig(cmd *cobra.Command) (Config, []error) {
 	var errs []error
 	if err := viper.BindPFlags(cmd.Flags()); err != nil {
-		errs = append(errs, fmt.Errorf("Failed to bind flags, error: %s\n", err.Error()))
+		errs = append(errs, fmt.Errorf("failed to bind flags, error: %s", err.Error()))
 	}
 
 	viper.SetEnvPrefix("AUTOFRESH")
@@ -30,7 +34,7 @@ func LoadConfig(cmd *cobra.Command) (Config, []error) {
 
 	viper.SetConfigFile("autofresh-config.json")
 	if err := viper.ReadInConfig(); err != nil {
-		errs = append(errs, fmt.Errorf("Failed to read config file, error: %s\n", err.Error()))
+		errs = append(errs, fmt.Errorf("failed to read config file, error: %s", err.Error()))
 	}
 
 	var conf Config

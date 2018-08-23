@@ -8,13 +8,13 @@ import (
 	"github.com/TerrenceHo/autofresh/logger"
 )
 
-// Runs a long process that needs to be manually killed. Killing a process is
+// Run a long process that needs to be manually killed. Killing a process is
 // accomplished by sending a true boolean value to stopChannel. Logs all errors
 // and output to the console.
 //
 // Internally, it sprouts three new goroutines. Two to read from os.Stdout and
 // os.Stderr respectively, and a last one to kill the process when stopChannel
-// recieves true.
+// receives true.
 func Run(runCommand string, stopChannel chan bool) bool {
 	cmd := exec.Command(runCommand)
 

@@ -7,15 +7,15 @@ import (
 	"os/exec"
 )
 
-// Struct to convert data from watchman get-sockname.
+// WatchmanSockName convert data from watchman get-sockname.
 type WatchmanSockName struct {
 	Version  string `json:"version"`
 	Sockname string `json:"sockname"`
 }
 
-// Get socket filename using exec "watchman get-sockname". Passes stderr and
-// stdout to the console. If it fails, then program shuts down. Otherwise,
-// returns sockname.
+// GetSockName gets the socket filename using exec "watchman get-sockname".
+// Passes stderr and stdout of command to the console. If it fails, then
+// program shuts down. Otherwise, returns sockname.
 func GetSockName(watchmanPath string) string {
 	cmd := exec.Command("watchman", "get-sockname")
 	var stdout, stderr bytes.Buffer

@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	GOARCH string = runtime.GOARCH
-	GOOS   string = runtime.GOOS
+	GOARCH string = runtime.GOARCH // Architecture running on
+	GOOS   string = runtime.GOOS   // Operating system running on
 )
 
 var (

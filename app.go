@@ -34,7 +34,7 @@ var (
 	suffixes        []string
 )
 
-// Main application start point. Will check if watchman exists at that path,
+// Start application. Will check if watchman exists at that path,
 // retrieve the socket name, instantiate a connection to watchman using Unix
 // Sockets, subscribe to the directory, and begin reading the subscription
 // messages and building the executable.
@@ -94,7 +94,7 @@ func Start(conf config.Config) {
 func read(c net.Conn, startChannel chan bool) {
 	d := json.NewDecoder(c)
 	m := make(map[string]interface{})
-	var start bool = true
+	var start = true
 	for {
 		if err := d.Decode(&m); err != nil {
 			if err != io.EOF {

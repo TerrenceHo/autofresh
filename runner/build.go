@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-// Runs a command to build a program. First word in buildCommand must be a
+// Build runs a command to build a program. First word in buildCommand must be a
 // executable command, the others are arguments. Writes output and errors to the
 // console. Waits for command to finish before exiting.
 func Build(buildString string) (string, error) {
