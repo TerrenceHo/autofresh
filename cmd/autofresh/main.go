@@ -36,6 +36,7 @@ func init() {
 	flags.StringP("watchman", "w", "watchman", "path to watchman executable")
 	flags.StringP("build", "b", "", "set build command")
 	flags.StringP("run", "r", "", "set process start command/run built program")
+	flags.StringSliceP("suffixes", "s", []string{}, "array of file suffixes")
 }
 
 func main() {

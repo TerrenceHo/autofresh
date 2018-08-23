@@ -31,6 +31,7 @@ var (
 	watchmanCommand string
 	buildCommand    string
 	runCommand      string
+	suffixes        []string
 )
 
 // Main application start point. Will check if watchman exists at that path,
@@ -46,6 +47,7 @@ func Start(conf config.Config) {
 	buildCommand = conf.Build
 	runCommand = conf.Run
 	watchmanCommand = conf.Watchman
+	suffixes = conf.Suffixes
 	isRunning := false
 
 	directory, err := filepath.Abs("./")
@@ -66,7 +68,7 @@ func Start(conf config.Config) {
 	go read(conn, startChannel) // read in separate go routine
 
 	// watchman.WatchProject(conn, directory)
-	watchman.Subscribe(conn, directory, subscriptionName)
+	watchman.Subscribe(conn, directory, subscriptionName, suffixes)
 
 	for {
 		start := <-startChannel
@@ -99,6 +101,7 @@ func read(c net.Conn, startChannel chan bool) {
 				log.Fatalf("Error decoding, error: %s\n", err.Error())
 			}
 		}
+		fmt.Println(m)
 		startChannel <- start
 		start = !start
 	}

@@ -15,6 +15,7 @@ type Config struct {
 	Watchman   string
 	Build      string
 	Run        string
+	Suffixes   []string
 }
 
 func LoadConfig(cmd *cobra.Command) (Config, []error) {
