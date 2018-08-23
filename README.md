@@ -55,13 +55,14 @@ configuration file autofresh-config.{json,yml/yaml,toml}, and finally the
 defaults, with the each item taking precedence in that order (i.e. if both flags
 and environment variables set watchman's path, the flag's path will be taken).
 The easiest way to configure Autofresh is to use a autofresh-config file. A
-sample autofresh-config file is shown below.
+sample autofresh-config file is shown below. Comments are added for clarity.
 
 ```json 
 {
-    "watchman": "/usr/local/bin/watchman",
-    "build": "go build -o sample .",
-    "run": "./sample"
+    "watchman": "/usr/local/bin/watchman",  --> path to watchman executable
+    "build": "go build -o sample .",        --> command to build program
+    "run": "./sample",                      --> command to run program 
+    "suffixes": ["go", "txt"]               --> file extensions to watch
 }
 ```
 

@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"log"
 	"strings"
 
@@ -14,11 +15,13 @@ type Config struct {
 	Watchman   string
 	Build      string
 	Run        string
+	Suffixes   []string
 }
 
-func LoadConfig(cmd *cobra.Command) Config {
+func LoadConfig(cmd *cobra.Command) (Config, []error) {
+	var errs []error
 	if err := viper.BindPFlags(cmd.Flags()); err != nil {
-		log.Printf("Failed to bind flags, error: %s\n", err.Error())
+		errs = append(errs, fmt.Errorf("Failed to bind flags, error: %s\n", err.Error()))
 	}
 
 	viper.SetEnvPrefix("AUTOFRESH")
@@ -27,12 +30,12 @@ func LoadConfig(cmd *cobra.Command) Config {
 
 	viper.SetConfigFile("autofresh-config.json")
 	if err := viper.ReadInConfig(); err != nil {
-		log.Printf("Failed to read config file, error %s\n", err.Error())
+		errs = append(errs, fmt.Errorf("Failed to read config file, error: %s\n", err.Error()))
 	}
 
 	var conf Config
 	if err := viper.Unmarshal(&conf); err != nil {
 		log.Fatalf("Unable to unmarshal into struct, error: %s\n", err.Error())
 	}
-	return conf
+	return conf, errs
 }

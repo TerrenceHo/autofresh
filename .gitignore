@@ -17,3 +17,4 @@
 /Godeps/
 
 ### Custom Files ###
+!bin/*.exe

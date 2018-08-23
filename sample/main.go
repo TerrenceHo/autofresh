@@ -7,7 +7,6 @@ import (
 )
 
 func main() {
-	fmt.Println("New Message")
 	for {
 		fmt.Println("I am running forever.")
 		time.Sleep(1 * time.Second)
