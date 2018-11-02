@@ -22,7 +22,8 @@ will automatically recompile, as seen above.
 You can checkout the [releases](https://github.com/TerrenceHo/autofresh/releases) 
 page and download the latest version of autofresh.
 Install the binary compiled for your operating system and architecture. The same 
-binaries are also available under the directory `bin`.
+binaries are also available under the directory `bin`. Remember to rename the
+binary from `autofresh-<OS>-<ARCHITECTURE>` to `autofresh`.
 
 If you have a Go runtime installed, you can `go get` this repository and
 automatically install it. Make sure you put the GOBIN in your PATH.
@@ -88,3 +89,5 @@ You should fork this repository, and then clone your fork into your GOPATH. The
 Makefile is included for development convenience. Once you have your appropriate
 changes, make a pull request! Most changes will be merged into the develop
 branch first, and will keep master branch stable.
+
+### Dependency Injection
