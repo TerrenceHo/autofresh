@@ -90,4 +90,17 @@ Makefile is included for development convenience. Once you have your appropriate
 changes, make a pull request! Most changes will be merged into the develop
 branch first, and will keep master branch stable.
 
-### Dependency Injection
+### Roadmap
+#### FileWatcher Interface
+- We want a filewatcher interface so that autowatch can function even without
+  watchman being present on the system. The following describes the possible
+  functions a FileWatcher can take.
+    1. Subscribe
+        - File extensions, directory, etc. Choose files to watch.
+    2. Read
+        - Takes in a channel, and if it detects that a file that it is watching has
+          changed, then it will send a signal to the startChannel.
+- We want to be able to take in more options for file watching. The following
+  are the input options we want to support
+    - autowatch \<filename.ext\> \<command\>
+    - autowatch \<\*.ext\> \<command\>

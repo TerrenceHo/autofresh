@@ -1,15 +1,12 @@
 package autofresh
 
 import (
-	"encoding/json"
 	"fmt"
-	"io"
 	"log"
-	"net"
 	"path/filepath"
 
 	"github.com/TerrenceHo/autofresh/config"
-	"github.com/TerrenceHo/autofresh/runner"
+	"github.com/TerrenceHo/autofresh/watcher"
 	"github.com/TerrenceHo/autofresh/watchman"
 )
 
@@ -48,61 +45,39 @@ func Start(conf config.Config) {
 	runCommand = conf.Run
 	watchmanCommand = conf.Watchman
 	suffixes = conf.Suffixes
-	isRunning := false
+	// isRunning := false
+
+	// watchman.NewWatchman(watchmanCommand,
 
 	directory, err := filepath.Abs("./")
 	if err != nil {
 		log.Fatalf("Directory absolute file path cannot be found. Error: %s\n", err.Error())
 	}
-	watchman.Check(watchmanCommand)
 
-	sockname := watchman.GetSockName(watchmanCommand)
+	wm := watchman.NewWatchman(watchmanCommand, directory, subscriptionName)
+	defer wm.Close()
 
-	conn, err := net.Dial("unix", sockname)
-	if err != nil {
-		log.Fatalf("Dialing unix socket %s failed, error: %s\n",
-			sockname, err.Error())
-	}
-	defer conn.Close()
+	builder := watcher.NewBuilder(wm, buildCommand, runCommand)
 
-	go read(conn, startChannel) // read in separate go routine
+	wm.Subscribe(directory, suffixes)
+	builder.Refresh()
 
-	// watchman.WatchProject(conn, directory)
-	watchman.Subscribe(conn, directory, subscriptionName, suffixes)
+	// go read(conn, startChannel) // read in separate goroutine
 
-	for {
-		start := <-startChannel
-		if start {
-			// kill previous process if necessary
-			if isRunning {
-				stopChannel <- true
-			}
-
-			buildErr, err := runner.Build(buildCommand)
-			if err != nil {
-				fmt.Println(buildErr)
-				fmt.Println(err.Error())
-				continue // skip run if build returned with error
-			}
-
-			// run here
-			isRunning = runner.Run(runCommand, stopChannel)
-		}
-	}
 }
 
-func read(c net.Conn, startChannel chan bool) {
-	d := json.NewDecoder(c)
-	m := make(map[string]interface{})
-	var start = true
-	for {
-		if err := d.Decode(&m); err != nil {
-			if err != io.EOF {
-				log.Fatalf("Error decoding, error: %s\n", err.Error())
-			}
-		}
-		fmt.Println(m)
-		startChannel <- start
-		start = !start
-	}
-}
+// func read(c net.Conn, startChannel chan bool) {
+// 	d := json.NewDecoder(c)
+// 	m := make(map[string]interface{})
+// 	var start = true
+// 	for {
+// 		if err := d.Decode(&m); err != nil {
+// 			if err != io.EOF {
+// 				log.Fatalf("Error decoding, error: %s\n", err.Error())
+// 			}
+// 		}
+// 		fmt.Println(m)
+// 		startChannel <- start
+// 		start = !start
+// 	}
+// }

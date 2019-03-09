@@ -8,7 +8,7 @@ import (
 
 func main() {
 	for {
-		fmt.Println("I am running forever.")
+		fmt.Println("I am running forever now.")
 		time.Sleep(1 * time.Second)
 
 		fmt.Fprintln(os.Stderr, "Stderr error message.")
